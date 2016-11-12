@@ -1,14 +1,18 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 from herders import views as herder_views
 from herders.forms import CrispyAuthenticationForm, CrispyPasswordChangeForm, CrispyPasswordResetForm, CrispySetPasswordForm
 
 urlpatterns = [
-    # AJAX-y stuff first
     url(r'^autocomplete/', include('autocomplete_light.urls')),
-    url(r'^api/', include('api.urls')),
+    # url(r'^api/', include('api.urls')),
+    url(r'^apiv2/', include('apiv2.urls')),
+    url(r'^api-auth/get-token/', obtain_jwt_token),
+    url(r'^api-auth/refresh-token/', refresh_jwt_token),
+    url(r'^api-auth/verify-token/', verify_jwt_token),
 
     # Bestiary
     url(r'^bestiary/', include('bestiary.urls', namespace='bestiary')),
