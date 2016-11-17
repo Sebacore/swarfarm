@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^autocomplete/', include('autocomplete_light.urls')),
     # url(r'^api/', include('api.urls')),
     url(r'^apiv2/', include('apiv2.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-auth/get-token/', obtain_jwt_token),
     url(r'^api-auth/refresh-token/', refresh_jwt_token),
     url(r'^api-auth/verify-token/', verify_jwt_token),
