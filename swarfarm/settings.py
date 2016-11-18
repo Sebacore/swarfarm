@@ -1,5 +1,6 @@
 import os
 import environ
+import datetime
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
@@ -242,4 +243,11 @@ REST_FRAMEWORK = {
         'user': '100/min',
     },
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+}
+
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'apiv2.views.jwt_response_payload_handler',
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(weeks=1),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(weeks=52),
+    'JWT_ALLOW_REFRESH': True,
 }

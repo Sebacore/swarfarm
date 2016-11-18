@@ -7,7 +7,15 @@ from news.models import *
 from .serializers import *
 
 
-# Permissions
+# JWT response to include user data
+def jwt_response_payload_handler(token, user=None, request=None):
+    return {
+        'token': token,
+        'user': UserSerializer(user, context={'request': request}).data
+    }
+
+
+# DRF permissions
 class IsStaffOrUser(BasePermission):
     def has_permission(self, request, view):
         return True
