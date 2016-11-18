@@ -1,10 +1,11 @@
 from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.permissions import BasePermission, AllowAny, IsAuthenticated, DjangoModelPermissions, DjangoModelPermissionsOrAnonReadOnly
+from rest_framework.permissions import BasePermission, AllowAny, DjangoModelPermissionsOrAnonReadOnly
 
 from news.models import *
 from .serializers import *
+from .filters import *
 
 
 # JWT response to include user data
@@ -35,13 +36,14 @@ class IsStaffOrOwner(BasePermission):
 
 # User / Auth
 class UserPagination(LimitOffsetPagination):
-    default_limit = 100
+    default_limit = 25
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     pagination_class = UserPagination
+    filter_class = UserFilter
 
     def get_permissions(self):
         if self.request.method == 'POST':
