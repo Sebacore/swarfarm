@@ -16,9 +16,10 @@ def jwt_response_payload_handler(token, user=None, request=None):
 
 
 # DRF permissions
-class IsStaffOrUser(BasePermission):
+class ViewUserList(BasePermission):
     def has_permission(self, request, view):
-        return True
+        # Only allow if retrieving single instance or is admin
+        return request.user.is_superuser or view.action == 'retrieve'
 
     def has_object_permission(self, request, view, obj):
         return request.user.is_staff or obj == request.user
@@ -38,8 +39,7 @@ class UserPagination(LimitOffsetPagination):
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.none()
-    permission_classes = (IsStaffOrOwner, )
+    queryset = User.objects.all()
     serializer_class = UserSerializer
     pagination_class = UserPagination
 
@@ -47,15 +47,7 @@ class UserViewSet(viewsets.ModelViewSet):
         if self.request.method == 'POST':
             return (AllowAny(), )
         else:
-            return (IsStaffOrUser(), )
-
-    def get_queryset(self):
-        if self.request.user.is_staff:
-            return User.objects.all().order_by('pk')
-        elif self.request.user.is_authenticated():
-            return User.objects.filter(pk=self.request.user.pk)
-        else:
-            return User.objects.none()
+            return (ViewUserList(), )
 
 
 # News
