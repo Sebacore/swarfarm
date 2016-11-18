@@ -11,8 +11,8 @@ class MonsterFilter(django_filters.FilterSet):
     leader_skill__attribute = django_filters.MultipleChoiceFilter(choices=LeaderSkill.ATTRIBUTE_CHOICES)
     leader_skill__area = django_filters.MultipleChoiceFilter(choices=LeaderSkill.AREA_CHOICES)
     skills__scaling_stats__pk = django_filters.MultipleChoiceFilter(choices=ScalingStat.objects.values_list('pk', 'stat'), conjoined=True)
-    effects_logic = django_filters.MethodFilter()
-    skills__skill_effect__pk = django_filters.MethodFilter(action='filter_skills__skill_effect__pk')
+    effects_logic = django_filters.BooleanFilter(method='filter_effects_logic')
+    skills__skill_effect__pk = django_filters.MultipleChoiceFilter(method='filter_skills__skill_effect__pk')
 
     class Meta:
         model = Monster

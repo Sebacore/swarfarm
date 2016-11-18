@@ -14,9 +14,9 @@ class MonsterInstanceFilter(django_filters.FilterSet):
     monster__leader_skill__attribute = django_filters.MultipleChoiceFilter(choices=LeaderSkill.ATTRIBUTE_CHOICES)
     monster__leader_skill__area = django_filters.MultipleChoiceFilter(choices=LeaderSkill.AREA_CHOICES)
     monster__skills__scaling_stats__pk = django_filters.MultipleChoiceFilter(choices=ScalingStat.objects.values_list('pk', 'stat'), conjoined=True)
-    monster__skills__skill_effect__pk = django_filters.MethodFilter(action='filter_monster__skills__skill_effect__pk')
-    effects_logic = django_filters.MethodFilter()
-    monster__fusion_food = django_filters.MethodFilter(action='filter_monster__fusion_food')
+    monster__skills__skill_effect__pk = django_filters.MultipleChoiceFilter(method='filter_monster__skills__skill_effect__pk')
+    effects_logic = django_filters.BooleanFilter(method='filter_effects_logic')
+    monster__fusion_food = django_filters.BooleanFilter(method='filter_monster__fusion_food')
 
     class Meta:
         model = MonsterInstance
@@ -90,9 +90,9 @@ class RuneInstanceFilter(django_filters.FilterSet):
     quality = django_filters.MultipleChoiceFilter(choices=RuneInstance.QUALITY_CHOICES)
     main_stat = django_filters.MultipleChoiceFilter(choices=RuneInstance.STAT_CHOICES)
     innate_stat = django_filters.MultipleChoiceFilter(choices=RuneInstance.STAT_CHOICES)
-    substats = django_filters.MethodFilter()
-    substat_logic = django_filters.MethodFilter()
-    assigned_to = django_filters.MethodFilter(action='filter_assigned_to')
+    substats = django_filters.MultipleChoiceFilter(method='filter_substats')
+    substat_logic = django_filters.BooleanFilter(method='filter_substat_logic')
+    assigned_to = django_filters.BooleanFilter(method='filter_assigned_to')
 
     class Meta:
         model = RuneInstance
