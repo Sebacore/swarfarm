@@ -212,10 +212,8 @@ CORS_ORIGIN_ALLOW_ALL = DEBUG
 CORS_ORIGIN_WHITELIST = (
     'tool.swop.one',
 )
-CORS_URLS_REGEX = r'^/api/.*$'
-CORS_ALLOW_METHODS = (
-    'GET',
-)
+CORS_URLS_REGEX = r'^/api(v\d+)?/.*$'
+
 
 # Google APIs
 GOOGLE_API_KEY = env('GOOGLE_API_KEY')
