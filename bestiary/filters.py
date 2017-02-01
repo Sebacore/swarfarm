@@ -5,7 +5,7 @@ from bestiary.models import Monster, Effect, Skill, LeaderSkill, ScalingStat
 
 
 class MonsterFilter(django_filters.FilterSet):
-    name = django_filters.MethodFilter(action='filter_name')
+    name = django_filters.CharFilter(method='filter_name')
     element = django_filters.MultipleChoiceFilter(choices=Monster.ELEMENT_CHOICES)
     archetype = django_filters.MultipleChoiceFilter(choices=Monster.TYPE_CHOICES)
     leader_skill__attribute = django_filters.MultipleChoiceFilter(choices=LeaderSkill.ATTRIBUTE_CHOICES)

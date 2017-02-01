@@ -6,7 +6,7 @@ from .models import MonsterInstance, MonsterTag, RuneInstance
 
 
 class MonsterInstanceFilter(django_filters.FilterSet):
-    monster__name = django_filters.MethodFilter(action='filter_monster__name')
+    monster__name = django_filters.CharFilter(method='filter_monster__name')
     tags__pk = django_filters.MultipleChoiceFilter(choices=MonsterTag.objects.values_list('pk', 'name'), conjoined=True)
     monster__element = django_filters.MultipleChoiceFilter(choices=Monster.ELEMENT_CHOICES)
     monster__archetype = django_filters.MultipleChoiceFilter(choices=Monster.TYPE_CHOICES)
